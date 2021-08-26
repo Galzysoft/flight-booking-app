@@ -1,4 +1,4 @@
-# Uber Air
+# Flight Booking app
 👉 This is a simple flight booking app build with flutter.
 
 Features 📱
@@ -19,12 +19,17 @@ Tools 💻
 
  - <a href="https://firebase.google.com/">Firebase</a>
  
- ![Screenshot](airports.png)
- ![Screenshot](calendar.png)
- ![Screenshot](flights.png)
- ![Screenshot](main_screen.png)
- ![Screenshot](passenger_list.png)
-
+ ![Screenshot](a1.png)
+ ![Screenshot](a2.png)
+ ![Screenshot](a3.png)
+ ![Screenshot](a4.png)
+ ![Screenshot](a5.png)
+![Screenshot](a6.png)
+![Screenshot](a7.png)
+![Screenshot](a8.png)
+![Screenshot](a9.png)
+![Screenshot](a10.png)
+![Screenshot](a11.png)
 
 
 
