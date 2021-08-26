@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:uberAir/constants/Constants.dart';
 class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+      padding:  EdgeInsets.only(top: 8.0.w, bottom: 16.0.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -12,32 +13,15 @@ class MyAppBar extends StatelessWidget {
               alignment: Alignment.centerLeft,
               icon: Icon(
                 Icons.menu,
-                color: Colors.amberAccent,
+                color: primaryColor,
                 size: 25,
               ),
               
               onPressed: () {
+                print("amc licked");
                Scaffold.of(context).openDrawer();
               }),
-          SizedBox(
-            width: 70,
-          ),
-          Text(
-            "Uber",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.amberAccent,
-                fontSize: 40),
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            "Air",
-            style: TextStyle(
-                fontWeight: FontWeight.w300,
-                color: Colors.amberAccent,
-                fontSize: 40),
-            textAlign: TextAlign.center,
-          ),
+
         ],
       ),
     );

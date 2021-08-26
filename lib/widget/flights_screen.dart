@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uberAir/constants/Constants.dart';
 import 'package:uberAir/database/db.dart';
 import 'package:uberAir/view_model/search_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -7,48 +8,53 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uberAir/models/flight.dart';
 import 'package:uberAir/view_model/airport_view_model.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'upload_ticket_screen.dart';
 
 class FligthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[700],
+      backgroundColor:whiteColor,
       appBar: AppBar(
-        backgroundColor: Colors.amber,
+        backgroundColor: whiteColor,
         centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Consumer<SearchViewModel>(builder: (context, item, child) {
-              return FutureBuilder<String>(
-                future: _getInboundCityName(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return Text(
-                    snapshot.data != null
-                        ? "${snapshot.data} "
-                        : "Select Airport",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-                  );
-                },
-              );
-            }),
-            Icon(Icons.trending_flat),
-            Consumer<SearchViewModel>(builder: (context, item, child) {
-              return FutureBuilder<String>(
-                future: _getOutboundCityName(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return Text(
-                    snapshot.data != null
-                        ? "${snapshot.data} "
-                        : "Select Airport",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-                  );
-                },
-              );
-            }),
+            Expanded(
+              child: Consumer<SearchViewModel>(builder: (context, item, child) {
+                return FutureBuilder<String>(
+                  future: _getInboundCityName(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    return Text(
+                      snapshot.data != null
+                          ? "${snapshot.data} "
+                          : "Select Airport",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                    );
+                  },
+                );
+              }),
+            ),
+            Expanded(child: Icon(Icons.trending_flat)),
+
+            Expanded(
+              child: Consumer<SearchViewModel>(builder: (context, item, child) {
+                return FutureBuilder<String>(
+                  future: _getOutboundCityName(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    return Text(
+                      snapshot.data != null
+                          ? "${snapshot.data} "
+                          : "Select Airport",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                    );
+                  },
+                );
+              }),
+            ),
           ],
         ),
         bottomOpacity: 0.75,
@@ -59,28 +65,35 @@ class FligthScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Icon(
-                    Icons.flight_takeoff,
-                    size: 30,
+                  Expanded(
+                    child: Icon(
+                      Icons.flight_takeoff,
+                      size: 30,
+                    ),
                   ),
-                  Text(
-                    "\tDeparture Date",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                  Expanded(
+                    child: Text(
+                      "\tDeparture Date",
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                    ),
                   ),
-                  Consumer<SearchViewModel>(builder: (context, item, child) {
-                    return FutureBuilder<String>(
-                      future: _getDepartureDate(),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        return Text(
-                          snapshot.data != null
-                              ? "${snapshot.data.substring(0, 10)} "
-                              : "Select Airport",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w400),
-                        );
-                      },
-                    );
-                  })
+                  Expanded(
+
+                    child: Consumer<SearchViewModel>(builder: (context, item, child) {
+                      return FutureBuilder<String>(
+                        future: _getDepartureDate(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          return Text(
+                            snapshot.hasData
+                                ?snapshot.data=="null"? "No Date": "${snapshot.data.substring(0, 10)} "
+                                : "Select Airport",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w400),
+                          );
+                        },
+                      );
+                    }),
+                  )
                 ],
               ),
             ])),
@@ -91,173 +104,190 @@ class FligthScreen extends StatelessWidget {
         return FutureBuilder<Flights>(
             future: fligths,
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
+
                 if (snapshot.data != null) {
                   return ListView.builder(
                     itemCount: snapshot.data.quotes.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 100,
-                        child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          child: InkWell(
-                            onTap: () async {
-                              String _carrierName =
-                                  snapshot.data.carriers[index].name;
-                              String _tmpUrl = await _getUrl(_carrierName);
-                              _tmpUrl = _tmpUrl.substring(0,_tmpUrl.length-1);
-                              String _url = 'https:$_tmpUrl';
-                              debugPrint("URL $_url");
-                              _launchURL(_url).then((value) {
-                                _showAlertDialog(context);
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: IconTheme(
-                                            data: IconThemeData(
-                                                color: Colors
-                                                    .amberAccent.shade700),
-                                            child: Icon(
-                                              Icons.flight,
-                                            )),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Text(
-                                            "${snapshot.data.carriers[index].name}",
-                                            style:
-                                                TextStyle(color: Colors.blue)),
-                                      ),
-                                    ],
-                                  ),
+                      return Padding(
+                        padding:  EdgeInsets.all(8.0.w),
+                        child: InkWell(
+                          onTap: () async {
+                            String _carrierName =
+                                snapshot.data.carriers[index].name;
+                            String _tmpUrl = await _getUrl(_carrierName);
+                            _tmpUrl = _tmpUrl.substring(0,_tmpUrl.length-1);
+                            String _url = 'https:$_tmpUrl';
+                            debugPrint("URL $_url");
+                            _launchURL(_url).then((value) {
+                              _showAlertDialog(context);
+                            });
+                          },
+                          child:  Material(
+                            elevation: 10.w,
+                            color: Colors.transparent,
+                            shadowColor: Colors.black26,
+                            child: Container(
+                              height: 100.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20.0.r),
                                 ),
-                                Expanded(
-                                  flex: 4,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 3,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Consumer<SearchViewModel>(builder:
-                                                (context, item, child) {
-                                              return FutureBuilder<String>(
-                                                future: _getInboundCityName(),
-                                                builder: (BuildContext context,
-                                                    AsyncSnapshot snapshot) {
-                                                  return Expanded(
+                                color: Colors.white60,
+                              ),
+                              child: Padding(
+                                padding:  EdgeInsets.all(5.0.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                            flex: 1,
+                                            child: IconTheme(
+                                                data: IconThemeData(
+                                                    color: Colors
+                                                        .amberAccent.shade700),
+                                                child: Icon(
+                                                  Icons.flight,
+                                                )),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Text(
+                                                "${snapshot.data.carriers[index].name}",
+                                                style:
+                                                    TextStyle(color: Colors.blue)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 4,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Expanded(
+                                            flex: 3,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Consumer<SearchViewModel>(builder:
+                                                    (context, item, child) {
+                                                  return FutureBuilder<String>(
+                                                    future: _getInboundCityName(),
+                                                    builder: (BuildContext context,
+                                                        AsyncSnapshot snapshot) {
+                                                      return Expanded(
+                                                        flex: 1,
+                                                        child: Text(
+                                                          "${snapshot.data}",
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight.w400),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                }),
+                                                Expanded(
                                                     flex: 1,
-                                                    child: Text(
-                                                      "${snapshot.data}",
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                    ),
+                                                    child:
+                                                        Icon(Icons.trending_flat)),
+                                                Consumer<SearchViewModel>(builder:
+                                                    (context, item, child) {
+                                                  return FutureBuilder<String>(
+                                                    future: _getOutboundCityName(),
+                                                    builder: (BuildContext context,
+                                                        AsyncSnapshot snapshot) {
+                                                      return Expanded(
+                                                        flex: 2,
+                                                        child: Text(
+                                                          "${snapshot.data}",
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight.w400),
+                                                        ),
+                                                      );
+                                                    },
                                                   );
-                                                },
-                                              );
-                                            }),
-                                            Expanded(
-                                                flex: 1,
-                                                child:
-                                                    Icon(Icons.trending_flat)),
-                                            Consumer<SearchViewModel>(builder:
-                                                (context, item, child) {
-                                              return FutureBuilder<String>(
-                                                future: _getOutboundCityName(),
-                                                builder: (BuildContext context,
-                                                    AsyncSnapshot snapshot) {
-                                                  return Expanded(
-                                                    flex: 2,
-                                                    child: Text(
-                                                      "${snapshot.data}",
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            }),
-                                          ],
-                                        ),
-                                      ),
-                                      snapshot.data.quotes[index].direct
-                                          ? Expanded(
-                                              flex: 1,
-                                              child: Text("Direct",
-                                                  style:
-                                                      TextStyle(fontSize: 14)),
-                                            )
-                                          : Expanded(
-                                              flex: 1,
-                                              child: Text("Not Direct",
-                                                  style:
-                                                      TextStyle(fontSize: 14)),
+                                                }),
+                                              ],
                                             ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        child: Text(
-                                            "${snapshot.data.quotes[index].minPrice} TRY"),
+                                          ),
+                                          snapshot.data.quotes[index].direct
+                                              ? Expanded(
+                                                  flex: 1,
+                                                  child: Text("Direct",
+                                                      style:
+                                                          TextStyle(fontSize: 14)),
+                                                )
+                                              : Expanded(
+                                                  flex: 1,
+                                                  child: Text("Not Direct",
+                                                      style:
+                                                          TextStyle(fontSize: 14)),
+                                                ),
+                                        ],
                                       ),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.star,
-                                        ),
-                                        color: context
-                                                    .read<AirportViewModel>()
-                                                    .isPressed ==
-                                                true
-                                            ? Colors.yellow
-                                            : Colors.black,
-                                        onPressed: () {
-                                          context
-                                              .read<AirportViewModel>()
-                                              .onPressed();
-                                        },
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            child: Text(
+                                                "${snapshot.data.quotes[index].minPrice} TRY"),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.star,
+                                            ),
+                                            color: context
+                                                        .read<AirportViewModel>()
+                                                        .isPressed ==
+                                                    true
+                                                ? Colors.yellow
+                                                : Colors.black,
+                                            onPressed: () {
+                                              context
+                                                  .read<AirportViewModel>()
+                                                  .onPressed();
+                                            },
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
                       );
                     },
                   );
-                } else {
+                }
+                else {
                   return Center(
-                    child: Text("No Flight"),
+                    child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(color: primaryColor,),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("No Flight"),
+                        )
+                      ],
+                    ),
                   );
                 }
-              } else {
-                return Center(
-                  child: Text("No Flight"),
-                );
-              }
+
             });
       })),
     );
@@ -289,7 +319,7 @@ class FligthScreen extends StatelessWidget {
   _launchURL(String url) async {
     try {
       if (await canLaunch(url)) {
-        await launch(url, forceWebView: false,enableJavaScript: true);
+        await launch(url, forceWebView: false,enableJavaScript: true,);
       } else {
         print("cant launch URL");
       }

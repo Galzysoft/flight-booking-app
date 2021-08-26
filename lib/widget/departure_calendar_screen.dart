@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:uberAir/constants/Constants.dart';
 
 import 'package:uberAir/view_model/calendar_view_model.dart';
 
@@ -9,10 +10,13 @@ class DepartureCalendar extends StatelessWidget {
   Widget build(BuildContext context) {
     CalendarController _calendarController = new CalendarController();
     return Scaffold(
+        backgroundColor: whiteColor,
         appBar: AppBar(
-          title: Text("Departure / Return ",
+
+          title: Text("Select Day of Departure",
               style: TextStyle(color: Colors.black)),
           centerTitle: false,
+          backgroundColor: whiteColor,
           actions: [
             Consumer<CalendarViewModel>(
                 builder: (context, calendarViewModel, child) {

@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:uberAir/constants/Constants.dart';
 import 'package:uberAir/locator.dart';
 import 'package:uberAir/view_model/passenger_list_view_model.dart';
 import 'package:uberAir/widget/splash_screen.dart';
-import 'package:uberAir/widget/uberAir_widget.dart';
+import 'package:uberAir/widget/home_navigator.dart';
 import 'database/db.dart';
 import 'view_model/airport_view_model.dart';
 import 'view_model/authentication_view_model.dart';
@@ -26,7 +28,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Database().fillMap();
     // Database().fillDB();
-    return FutureBuilder(
+    return  ScreenUtilInit(
+        designSize: Size(360, 690),
+    builder: () { return FutureBuilder(
       future: _initialization,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -37,8 +41,8 @@ class MyApp extends StatelessWidget {
           return MultiProvider(
             child: MaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: "uberAir",
-                theme: ThemeData(primarySwatch: Colors.amber),
+                title: "Flight Booking",
+                theme: ThemeData(primarySwatch: colorCustom),
                 home: Splash()),
             providers: [
               ChangeNotifierProvider<AirportViewModel>(
@@ -62,6 +66,6 @@ class MyApp extends StatelessWidget {
 
         return CircularProgressIndicator();
       },
-    );
+   );});
   }
 }

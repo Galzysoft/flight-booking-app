@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:uberAir/constants/Constants.dart';
 import 'package:uberAir/view_model/authentication_view_model.dart';
 import 'package:uberAir/widget/home_screen.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 String _nameSurname;
 String _email;
 String _password;
@@ -13,13 +14,14 @@ class SignUpWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String _confirmedPassword;
     return Scaffold(
+      backgroundColor: whiteColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Container(
-        decoration: buildBoxDecoration(),
+
         height: double.infinity,
         width: double.infinity,
         child: SingleChildScrollView(
@@ -31,7 +33,7 @@ class SignUpWidget extends StatelessWidget {
                 ),
                 alignment: Alignment.center,
                 child: Column(children: <Widget>[
-                  buildText1(),
+
                   Container(
                     padding: EdgeInsets.only(
                       right: 50,
@@ -130,67 +132,105 @@ class SignUpWidget extends StatelessWidget {
                                 AutovalidateMode.onUserInteraction,
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.only(top: 20),
-                          width: 450,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Colors.black)),
-                            child: Text("Sign up"),
-                            onPressed: () {
-                              if (_nameSurname == null) {
-                                Fluttertoast.showToast(
-                                    msg: "Please enter name and surname",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
-                                return;
-                              } else if (_email == null) {
-                                Fluttertoast.showToast(
-                                    msg: "Please enter E-Mail",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
-                              } else if (_password == null) {
-                                Fluttertoast.showToast(
-                                    msg: "Please enter password",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
-                              } else if (_confirmedPassword == null) {
-                                Fluttertoast.showToast(
-                                    msg: "Please confirm your password",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
-                              } else {
-                                context
-                                    .read<AuthenticationViewModel>()
-                                    .signUp(_email, _password);
-                                Fluttertoast.showToast(
-                                    msg:
-                                        "We send you a link to your mail adress please verify",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
-                                   Navigator.pop(context,
-                      MaterialPageRoute(builder: (context) => MyFlightInfoField()));
-                              }
-                            },
-                            elevation: 10,
+                        Padding(
+                          padding:  EdgeInsets.only(top:8.0.w),
+                          child: Material(
+                            elevation: 10.w,
+                            color: Colors.transparent,
+                            shadowColor: Colors.black26,
+                            child:                  Padding(
+                              padding: EdgeInsets.fromLTRB(16.0.w, 4.w, 16.w, 4.w),
+                              child: SizedBox(
+                                height: 56.h,
+                                width: MediaQuery.of(context).size.width,
+                                child: InkWell(
+                                  onTap: () {
+                                    if (_nameSurname == null) {
+                                      Fluttertoast.showToast(
+                                          msg: "Please enter name and surname",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                      return;
+                                    } else if (_email == null) {
+                                      Fluttertoast.showToast(
+                                          msg: "Please enter E-Mail",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    } else if (_password == null) {
+                                      Fluttertoast.showToast(
+                                          msg: "Please enter password",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    } else if (_confirmedPassword == null) {
+                                      Fluttertoast.showToast(
+                                          msg: "Please confirm your password",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    } else {
+                                      context
+                                          .read<AuthenticationViewModel>()
+                                          .signUp(_email, _password);
+                                      Fluttertoast.showToast(
+                                          msg:
+                                          "We send you a link to your mail adress please verify",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                      Navigator.pop(context,
+                                          MaterialPageRoute(builder: (context) => MyFlightInfoField()));
+                                    }
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 40.h,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          stops: [
+                                            0.1,
+                                            0.9
+                                          ],
+                                          colors: [
+                                            gradientlight.withOpacity(0.8),
+                                            gradientdark.withOpacity(0.8),
+
+                                          ]),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20.0.r),
+                                        topRight: Radius.circular(20.0.r),
+                                        bottomLeft: Radius.circular(20.0.r),
+                                        bottomRight: Radius.circular(20.0.r),
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child:Text(
+                                        "Sign up",
+                                        style: TextStyle(color: Colors.white, fontSize:buttonfontsize),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        )
+                        ),
+
+
                       ],
                     ),
                   )
@@ -203,14 +243,7 @@ class SignUpWidget extends StatelessWidget {
     );
   }
 
-  BoxDecoration buildBoxDecoration() {
-    return BoxDecoration(
-        color: Colors.orange[900],
-        gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.blue, Colors.amber[900]]));
-  }
+
 
   Container buildText2() {
     return Container(
@@ -221,18 +254,18 @@ class SignUpWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Uber",
+              "Flight",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.amberAccent,
+                  color:primaryColorblue,
                   fontSize: 35),
               textAlign: TextAlign.center,
             ),
             Text(
-              "Air",
+              "Booking",
               style: TextStyle(
                   fontWeight: FontWeight.w300,
-                  color: Colors.amberAccent,
+                  color: primaryColorblue,
                   fontSize: 35),
               textAlign: TextAlign.center,
             ),
@@ -242,28 +275,5 @@ class SignUpWidget extends StatelessWidget {
     );
   }
 
-  Container buildText1() {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Text(
-            "WELCOME BACK TO ",
-            style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'OpenSans',
-                fontWeight: FontWeight.bold,
-                fontSize: 25),
-          ),
-          Text(
-            "UBER AIR",
-            style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'OpenSans',
-                fontWeight: FontWeight.bold,
-                fontSize: 30),
-          ),
-        ],
-      ),
-    );
-  }
+
 }

@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:uberAir/widget/uberAir_widget.dart';
-
+import 'package:uberAir/constants/Constants.dart';
+import 'package:uberAir/widget/home_navigator.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -11,21 +11,17 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
-  SpinKitHourGlass spinkit;
+  SpinKitChasingDots spinkit;
+
   @override
   void initState() {
     super.initState();
 
-     spinkit = SpinKitHourGlass(
-      color: Colors.amber,
-      size: 50.0,
-      controller: AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 3000)),
-    );
 
-    Future.delayed(const Duration(seconds: 4), () async {
+
+    Future.delayed(const Duration(seconds: 6), () async {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => UberAir()));
+          context, MaterialPageRoute(builder: (context) => HomeNavigator()));
     });
   }
 
@@ -33,49 +29,50 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/splash_bg.jpg"), fit: BoxFit.cover ),
-      ),
-
+       color:whiteColor      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              spinkit,
+         SpinKitChasingDots(
+            color: primaryColor,
+            size: 50.0,
+            // duration: const Duration(milliseconds: 3000)
+            // controller: AnimationController(
+            //     vsync: this, duration: const Duration(milliseconds: 3000)),
+          ),
               SizedBox(
                 height: 25,
               ),
-              
-              Row(
+              Column(
                 children: [
                   SizedBox(
                     width: 110,
                   ),
                   Text(
-            "Uber",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.amberAccent,
-                fontSize: 60),
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            "Air",
-            style: TextStyle(
-                fontWeight: FontWeight.w300,
-                color: Colors.amberAccent,
-                fontSize: 60),
-            textAlign: TextAlign.center,
-          ),
+                    "Flight",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: primaryColorblue,
+                        fontSize: Splashtext),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "Booking",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white,
+                        fontSize: Splashtext),
+                    textAlign: TextAlign.center,
+                  ),
                 ],
               ),
             ],
+          ),
         ),
       ),
-      ),
-      
     );
   }
 }

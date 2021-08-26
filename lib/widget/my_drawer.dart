@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uberAir/constants/Constants.dart';
 import 'package:uberAir/view_model/authentication_view_model.dart';
 import 'package:uberAir/widget/home_screen.dart';
 import 'package:uberAir/widget/upload_ticket_screen.dart';
@@ -26,8 +27,9 @@ class MyDrawer extends StatelessWidget {
         color: Colors.white,
         child: Container(
             decoration: BoxDecoration(
+              color: primaryColorblue,
               gradient: LinearGradient(
-                  colors: [Colors.orange[900], Colors.blue],
+                  colors: [Colors.white, whiteColor],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter),
             ),
@@ -35,17 +37,7 @@ class MyDrawer extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: [
                 BuildDrawerHeader(),
-                Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.fromLTRB(10, 0, 5, 4),
-                  child: Text(
-                    "Welcome to UberAir. Please sign in or sign up to see deals and much more.",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+
                 buildExpansionTile(context),
                 Container(
                   decoration: BoxDecoration(
@@ -62,44 +54,12 @@ class MyDrawer extends StatelessWidget {
                               builder: (context) => SignUpWidget()));
                     },
                     title:
-                        Text('Sign Up', style: TextStyle(color: Colors.black)),
+                        Text('Sign Up', style: TextStyle(color: primaryColorblue)),
                     trailing: Icon(Icons.chevron_right),
                   ),
                 ),
                 Provider.of<AuthenticationViewModel>(context).isLogedIn()?_myTicketWidget(context):Container(),
-                Row(
-                  children: [
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PrivacyPolicy()));
-                        },
-                        child: Text("Privacy Policy")),
-                  ],
-                ),
-                Divider(
-                  color: Colors.black,
-                  thickness: 1,
-                ),
-                Row(
-                  children: [
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AboutUs()));
-                        },
-                        child: Text("About Us")),
-                  ],
-                ),
-                Provider.of<AuthenticationViewModel>(context).isLogedIn()?buildExpansionTileSettings(context):Container(),
-                Divider(
-                  color: Colors.black,
-                  thickness: 1,
-                ),
+
               ],
             )),
       ),
@@ -115,15 +75,15 @@ class MyDrawer extends StatelessWidget {
           alignment: Alignment.center,
           margin: EdgeInsets.fromLTRB(10, 0, 5, 4),
           child: Text(
-            "Welcome to UberAir. Please sign in or sign up to see deals and much more.",
+            "Welcome to Flight Booking. Please sign in or sign up to see deals and much more.",
             style: TextStyle(
-              color: Colors.black,
+              color: primaryColorblue,
               fontWeight: FontWeight.w400,
             ),
           ),
         ),
         Divider(
-          color: Colors.black,
+          color:primaryColorblue,
           thickness: 1,
         ),
         ListTile(
@@ -131,18 +91,18 @@ class MyDrawer extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SignInWidget()));
           },
-          title: Text('Sign Up', style: TextStyle(color: Colors.black)),
+          title: Text('Sign Up', style: TextStyle(color: primaryColorblue)),
           trailing: Icon(Icons.chevron_right),
         ),
         ListTile(
           onTap: () {},
           title: Text('Flights',
               style: TextStyle(
-                color: Colors.black,
+                color: primaryColorblue,
               )),
           trailing: Icon(Icons.chevron_right),
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1, color: Colors.black),
+            side: BorderSide(width: 1, color: primaryColorblue),
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
@@ -156,7 +116,7 @@ class MyDrawer extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           border: Border(
-        top: BorderSide(width: 0.5, color: Colors.black),
+        top: BorderSide(width: 0.5, color: primaryColorblue),
       )),
       child: ExpansionTile(
         title: Text(
@@ -200,7 +160,7 @@ class MyDrawer extends StatelessWidget {
                 },
                 child: Text('Log Out',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: primaryColorblue,
                     )),
               ),
             ],
@@ -214,7 +174,7 @@ class MyDrawer extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           border: Border(
-        top: BorderSide(width: 0.5, color: Colors.black),
+        top: BorderSide(width: 0.5, color: primaryColorblue),
       )),
       child: ExpansionTile(
         title: Text(
@@ -267,7 +227,7 @@ class MyDrawer extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => TicketUploadScreen()));
           },
-          title: Text('My Tickets', style: TextStyle(color: Colors.black)),
+          title: Text('My Tickets', style: TextStyle(color: primaryColorblue)),
           trailing: Icon(Icons.chevron_right),
         ),
       );
@@ -289,33 +249,11 @@ class BuildDrawerHeader extends StatelessWidget {
               image: DecorationImage(
                   fit: BoxFit.fill,
                   image: AssetImage(
-                    "assets/plane.jpg",
+                    "assets/flight-booking-system-855x360.jpg",
                   ))),
         ),
       ),
-      Container(
-        padding: EdgeInsets.all(20),
-        child: Row(
-          children: <Widget>[
-            Text(
-              "Uber",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.amberAccent,
-                  fontSize: 35),
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              "Air",
-              style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  color: Colors.amberAccent,
-                  fontSize: 35),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
+
     ]);
   }
 }

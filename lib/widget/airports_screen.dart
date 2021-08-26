@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uberAir/constants/Constants.dart';
 
 import 'package:uberAir/widget/search_airports_screen.dart';
 
@@ -6,8 +7,9 @@ class OpenAirPorts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
+      backgroundColor: whiteColor,
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade900,
+        backgroundColor: whiteColor,
         actions: [
           IconButton(
               icon: Icon(Icons.search),

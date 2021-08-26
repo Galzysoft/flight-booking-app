@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:uberAir/constants/Constants.dart';
 import 'package:uberAir/view_model/authentication_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,7 @@ class ForgotPassword extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
+      backgroundColor: whiteColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -18,10 +20,7 @@ class ForgotPassword extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(30),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.orange[900], Colors.blue],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter),
+
         ),
         child: ListView(children: [
           Column(
@@ -31,18 +30,18 @@ class ForgotPassword extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Uber",
+                    "Flight",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.amberAccent,
+                        color: primaryColorblue,
                         fontSize: 40),
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    "Air",
+                    "Booking",
                     style: TextStyle(
                         fontWeight: FontWeight.w300,
-                        color: Colors.amberAccent,
+                        color:primaryColorblue,
                         fontSize: 40),
                     textAlign: TextAlign.center,
                   ),
@@ -58,7 +57,7 @@ class ForgotPassword extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      color: Colors.white,
+                      color: primaryColor.withOpacity(0.5),
                       fontSize: 20),
                 ),
               ),
@@ -94,21 +93,19 @@ class ForgotPassword extends StatelessWidget {
               Container(
                 width: 200,
                 child: RaisedButton(
-                  color: Colors.amber,
+                  color: primaryColorblue,
                   onPressed: () {
                     context
                         .read<AuthenticationViewModel>()
-                        .resetPassword(_email);
-                    Fluttertoast.showToast(
-                        msg: "Please check your email",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.white,
-                        fontSize: 16.0);
+                        .resetPassword(context,_email);
+
                   },
-                  child: Text("SEND"),
+                  child: Row(
+                    children: [
+                      Expanded(child: Text("SEND",textAlign: TextAlign.center,)),
+                      Icon(Icons.send,color: whiteColor,)
+                    ],
+                  ),
                 ),
               ),
             ],

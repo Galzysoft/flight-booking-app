@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:uberAir/constants/Constants.dart';
 
 abstract class ListItem {
   Widget buildTitle(BuildContext context, String _title);
@@ -53,7 +54,7 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       width: 150,
       height: 30,
       child: Text("($_subTitle)",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+          style: TextStyle(fontSize: headingtext, fontWeight: FontWeight.w600)),
     );
   }
 
@@ -63,7 +64,7 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       width: 150,
       height: 30,
       child: Text("$_title",
-          style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold)),
+          style: TextStyle(fontSize: buttonfontsize, fontWeight: FontWeight.bold,color:primaryColorblue)),
     );
   }
 
@@ -73,7 +74,7 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.do_disturb_on_outlined),
+          icon: Icon(Icons.do_disturb_on_outlined,color:primaryColorblue),
           onPressed: () {
             if (_indexAdult > 0) {
               decrementAdult();
@@ -95,13 +96,13 @@ class ItemViewModel with ChangeNotifier implements ListItem {
         ),
         Text(
           "${_indexAdult.toString()}",
-          style: TextStyle(fontSize: 30, color: Colors.amberAccent),
+          style: TextStyle(fontSize: 30, color:primaryColor),
         ),
         SizedBox(
           width: 10,
         ),
         IconButton(
-          icon: Icon(Icons.add_box_outlined),
+          icon: Icon(Icons.add_circle_outline,color:primaryColorblue),
           onPressed: incrementAdult,
           iconSize: 30,
         ),
@@ -114,7 +115,7 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.do_disturb_on_outlined),
+          icon: Icon(Icons.do_disturb_on_outlined,color:primaryColorblue),
           onPressed: () {
             if (_indexKid > 0) {
               decrementKid();
@@ -136,13 +137,13 @@ class ItemViewModel with ChangeNotifier implements ListItem {
         ),
         Text(
           "${_indexKid.toString()}",
-          style: TextStyle(fontSize: 30, color: Colors.amberAccent),
+          style: TextStyle(fontSize: 30,color:primaryColor),
         ),
         SizedBox(
           width: 10,
         ),
         IconButton(
-          icon: Icon(Icons.add_box_outlined),
+          icon: Icon(Icons.add_circle_outline_outlined,color:primaryColorblue),
           onPressed: incrementKid,
           iconSize: 30,
         ),
@@ -155,7 +156,7 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.do_disturb_on_outlined),
+          icon: Icon(Icons.do_disturb_on_outlined,color:primaryColorblue),
           onPressed: () {
             if (_indexBaby > 0) {
               decrementBaby();
@@ -177,13 +178,13 @@ class ItemViewModel with ChangeNotifier implements ListItem {
         ),
         Text(
           "${_indexBaby.toString()}",
-          style: TextStyle(fontSize: 30, color: Colors.amberAccent),
+          style: TextStyle(fontSize: 30, color:primaryColor),
         ),
         SizedBox(
           width: 10,
         ),
         IconButton(
-          icon: Icon(Icons.add_box_outlined),
+          icon: Icon(Icons.add_circle_outline_outlined,color:primaryColorblue),
           onPressed: incrementBaby,
           iconSize: 30,
         ),
@@ -196,7 +197,7 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.do_disturb_on_outlined),
+          icon: Icon(Icons.do_disturb_on_outlined,color:primaryColorblue),
           onPressed: () {
             if (_indexOld > 0) {
               decrementOld();
@@ -218,13 +219,13 @@ class ItemViewModel with ChangeNotifier implements ListItem {
         ),
         Text(
           "${_indexOld.toString()}",
-          style: TextStyle(fontSize: 30, color: Colors.amberAccent),
+          style: TextStyle(fontSize: 30, color:primaryColor),
         ),
         SizedBox(
           width: 10,
         ),
         IconButton(
-          icon: Icon(Icons.add_box_outlined),
+          icon: Icon(Icons.add_circle_outline_outlined,color:primaryColorblue),
           onPressed: incrementOld,
           iconSize: 30,
         ),
@@ -237,7 +238,7 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.do_disturb_on_outlined),
+          icon: Icon(Icons.do_disturb_on_outlined,color:primaryColorblue),
           onPressed: () {
             if (_indexStudent > 0) {
               decrementStudent();
@@ -259,13 +260,13 @@ class ItemViewModel with ChangeNotifier implements ListItem {
         ),
         Text(
           "${_indexStudent.toString()}",
-          style: TextStyle(fontSize: 30, color: Colors.amberAccent),
+          style: TextStyle(fontSize: 30,color:primaryColor),
         ),
         SizedBox(
           width: 10,
         ),
         IconButton(
-          icon: Icon(Icons.add_box_outlined),
+          icon: Icon(Icons.add_circle_outline_outlined,color:primaryColorblue),
           onPressed: incrementStudent,
           iconSize: 30,
         ),
@@ -278,7 +279,7 @@ class ItemViewModel with ChangeNotifier implements ListItem {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
-          icon: Icon(Icons.do_disturb_on_outlined),
+          icon: Icon(Icons.do_disturb_on_outlined,color:primaryColorblue),
           onPressed: () {
             if (_indexYoung > 0) {
               decrementYoung();
@@ -300,13 +301,13 @@ class ItemViewModel with ChangeNotifier implements ListItem {
         ),
         Text(
           "${_indexYoung.toString()}",
-          style: TextStyle(fontSize: 30, color: Colors.amberAccent),
+          style: TextStyle(fontSize: 30,color:primaryColor),
         ),
         SizedBox(
           width: 10,
         ),
         IconButton(
-          icon: Icon(Icons.add_box_outlined),
+          icon: Icon(Icons.add_circle_outline_outlined,color:primaryColorblue),
           onPressed: incrementYoung,
           iconSize: 30,
         ),

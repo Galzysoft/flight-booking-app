@@ -5,7 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:uberAir/constants/Constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class TicketUploadScreen extends StatefulWidget {
   @override
   _TicketUploadScreenState createState() => _TicketUploadScreenState();
@@ -24,12 +25,14 @@ class _TicketUploadScreenState extends State<TicketUploadScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteColor,
         appBar: AppBar(
-          title: Text("Tickets"),
+          backgroundColor: whiteColor,
+          title: Text("Ticksets",style: TextStyle(fontSize: 16.sp),),
           actions: [
             IconButton(
                 icon: Icon(
-                  Icons.photo_library_outlined,
+                  Icons.photo_library_outlined,color: primaryColorblue,
                   size: MediaQuery.of(context).size.height * 0.05,
                 ),
                 onPressed: () {
@@ -37,7 +40,7 @@ class _TicketUploadScreenState extends State<TicketUploadScreen> {
                 }),
             IconButton(
                 icon: Icon(
-                  Icons.camera_alt_outlined,
+                  Icons.camera_alt_outlined,color: primaryColorblue,
                   size: MediaQuery.of(context).size.height * 0.05,
                 ),
                 onPressed: () {
@@ -45,7 +48,7 @@ class _TicketUploadScreenState extends State<TicketUploadScreen> {
                 }),
             IconButton(
                 icon: Icon(
-                  Icons.refresh_outlined,
+                  Icons.refresh_outlined,color: primaryColorblue,
                   size: MediaQuery.of(context).size.height * 0.05,
                 ),
                 onPressed: () async {
@@ -54,7 +57,7 @@ class _TicketUploadScreenState extends State<TicketUploadScreen> {
                 }),
             IconButton(
                 icon: Icon(
-                  Icons.delete,
+                  Icons.delete,color: primaryColor,
                   size: MediaQuery.of(context).size.height * 0.05,
                 ),
                 onPressed: () async {

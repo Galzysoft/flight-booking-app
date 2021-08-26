@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uberAir/constants/Constants.dart';
 import 'package:uberAir/view_model/passenger_list_view_model.dart';
 
 class OpenPassengerList extends StatelessWidget {
@@ -23,7 +24,7 @@ class OpenPassengerList extends StatelessWidget {
     subTitleList.add("Between 11-24 ");
     return Scaffold(
         appBar: AppBar(
-          
+          backgroundColor: whiteColor,
           centerTitle: true,
           title: Text(
             "Select Passenger",
@@ -43,7 +44,7 @@ class OpenPassengerList extends StatelessWidget {
                   });
             })
           ],
-          backgroundColor: Colors.amber,
+
           leading: IconButton(
             icon: Icon(Icons.close, color: Colors.black),
             onPressed: () {
@@ -52,7 +53,7 @@ class OpenPassengerList extends StatelessWidget {
           ),
         ),
         body: Consumer<ItemViewModel>(builder: (context, item, child) {
-          return Container(
+          return Container(color: whiteColor,
             padding: EdgeInsets.only(left: 20, right: 10, top: 20),
             child: ListView.builder(
               itemCount: titleList.length,

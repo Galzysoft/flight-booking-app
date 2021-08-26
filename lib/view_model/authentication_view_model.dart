@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthenticationViewModel with ChangeNotifier {
   final FirebaseAuth _firebaseAuth;
@@ -45,11 +46,27 @@ class AuthenticationViewModel with ChangeNotifier {
     }
   }
 
-  void resetPassword(String email) async {
+  void resetPassword(context,String email) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
+      Fluttertoast.showToast(
+          msg: "Email Sent Please check your email",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
     } catch (e) {
-      print("error on resetPassword  $e");
+
+      Fluttertoast.showToast(
+          msg: " error Please check your email address",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
   }
 
