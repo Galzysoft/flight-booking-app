@@ -323,6 +323,7 @@ class MyFlightInfoField extends StatelessWidget {
                                       );
                                     },
                                   ),
+
                                   FutureBuilder<String>(
                                     future: _getOutboundCityName(),
                                     builder: (BuildContext context,
